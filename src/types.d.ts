@@ -3,10 +3,10 @@ export interface UserTypes {
     username: string,
     email: string,
     password: string,
-    conformpassword: string
+    conformPassword: string
 }
 
 export interface InitialStateTypes {
-    user: UserTypes|null,
-    auth:boolean
+    User: UserTypes|null,
+    Auth:boolean
 }

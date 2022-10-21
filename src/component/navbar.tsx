@@ -4,7 +4,7 @@ import { useAppSelector } from "../redux/hook"
 
 
 export const Navbar=()=>{
-   const auth= useAppSelector((state)=>state.User.auth)
+   const auth= useAppSelector((state)=>state.User.Auth)
     useEffect(()=>{
 
     })
@@ -19,7 +19,7 @@ export const Navbar=()=>{
                 </>
                 
                 :<>
-                <Link to="/signin">SignIn</Link>
+                <Link to="/signup">SignIn</Link>
                 <Link to="/login">LogIn</Link>
                 <Link to="/forgetpassword">ForgetPassWord</Link>
                 </>

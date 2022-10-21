@@ -5,9 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+axios.defaults.baseURL='http://localhost:3005'
+axios.defaults.withCredentials=true
 root.render(
   <Provider store={store}>
     <App />

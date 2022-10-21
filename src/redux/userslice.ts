@@ -3,8 +3,8 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { InitialStateTypes } from '../types'
 
 const initialState:InitialStateTypes={
-    user:null,
-    auth:true
+    User:null,
+    Auth:false
 }
 
 const userslice=createSlice({
@@ -12,8 +12,8 @@ const userslice=createSlice({
     initialState:initialState,
     reducers:{
         setInitialState:(state:InitialStateTypes,action:PayloadAction<InitialStateTypes>)=>{
-            state.user=action.payload.user
-            state.auth=action.payload.auth
+            state.User=action.payload.User
+            state.Auth=action.payload.Auth
         }
     }
 })

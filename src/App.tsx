@@ -10,12 +10,14 @@ import { ForgetPassWord } from './pages/forgotpassword';
 import { ChangePassword } from './pages/changepassword';
 import { useAppSelector } from './redux/hook';
 import { useAppDispatch } from './redux/hook';
+import axios from 'axios';
 
 function App() {
   const dispatch=useAppDispatch()
-  const auth=useAppSelector(state=>state.User.auth)
+  const auth=useAppSelector(state=>state.User.Auth)
   useEffect(()=>{
-        
+       const token= localStorage.getItem('jwt-token')
+       axios.defaults.headers.common['jwt-token']=token
   })
   return (
     <div>
