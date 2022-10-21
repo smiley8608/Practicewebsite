@@ -10,6 +10,8 @@ const middlerware = (req: updatedRequest, res: express.Response, next: express.N
 
     const token = req.headers['jwt-token'] as string
     const envsecret = process.env.Token_securt as Secret
+    console.log('code');
+    
     if (token && envsecret) {
 
         try {
@@ -17,10 +19,15 @@ const middlerware = (req: updatedRequest, res: express.Response, next: express.N
             let verify = Jwt.verify(token, envsecret)
             let decoded: any = Jwt.decode(token)
             if (req.path === '/signup' || req.path === '/login') {
-                next()
+               return res.json({message:'entry resticted'})
+                
             } else if (req.path !== '/signup' && req.path !== '/login' && req.path !== '/forgetpassword') {
+                console.log('ijhh');
+                
                 userModel.findById(decoded.id)
                     .then(ress => {
+                        console.log(ress);
+                        
                          req.User = ress as unknown as userProps
                         next()
                     })
@@ -39,13 +46,11 @@ const middlerware = (req: updatedRequest, res: express.Response, next: express.N
         }
 
     } else {
-        if (req.path === '/signup' || req.path === '/login') {
+        if (req.path === '/signup' || req.path === '/login'||req.path==='/forgetpassword') {
+            console.log('shh');
             
-            
-            next()
+             next()
         } else {
-            
-            
             return res.json({ Auth: false, User: null })
         }
     }
