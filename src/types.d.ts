@@ -10,3 +10,9 @@ export interface InitialStateTypes {
     User: UserTypes|null,
     Auth:boolean
 }
+
+export interface mailerprops {
+    host:string,
+    port:number,
+    user:string
+}

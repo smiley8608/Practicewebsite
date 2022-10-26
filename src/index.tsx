@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 axios.defaults.baseURL='http://localhost:3005'
-axios.defaults.withCredentials=true
+// axios.defaults.withCredentials=true
 root.render(
   <Provider store={store}>
     <App />

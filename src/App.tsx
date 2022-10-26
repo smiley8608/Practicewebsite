@@ -8,13 +8,13 @@ import { SignOut } from './pages/signout';
 import { LogIn } from './pages/login';
 import { ForgetPassWord } from './pages/forgotpassword';
 import { ChangePassword } from './pages/changepassword';
-import { useAppSelector } from './redux/hook';
-import { useAppDispatch } from './redux/hook';
 import axios from 'axios';
+import { ResetPassword } from './pages/resetpassword';
+
 
 function App() {
-  const dispatch=useAppDispatch()
-  const auth=useAppSelector(state=>state.User.Auth)
+ 
+  
   useEffect(()=>{
        const token= localStorage.getItem('jwt-token')
        axios.defaults.headers.common['jwt-token']=token
@@ -24,12 +24,13 @@ function App() {
       <BrowserRouter>
       <Navbar />
      <Routes>
-      <Route path='/' index element={<Home />}></Route>
-      <Route path='/signup' index element={<SignUp />}></Route>
-      <Route path='/signout' index element={<SignOut />}></Route>
-      <Route path='/login' index element={<LogIn />}></Route>
-      <Route path='/forgetpassword' index element={<ForgetPassWord />}></Route>
-      <Route path='/changepassword' index element={<ChangePassword />}></Route>
+      <Route path='/' index element={<Home />} />
+      <Route path='/signup' index element={<SignUp />} />
+      <Route path='/signout' index element={<SignOut />} />
+      <Route path='/resetpassword/:token' element={<ResetPassword />} />
+      <Route path='/login' index element={<LogIn />} />
+      <Route path='/forgetpassword' index element={<ForgetPassWord />} />
+      <Route path='/changepassword' index element={<ChangePassword />} />
 
       </Routes> 
       </BrowserRouter>

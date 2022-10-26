@@ -1,3 +1,4 @@
+import { Uplodeimages } from "./uplodefile"
 
 
 
@@ -5,7 +6,7 @@ export const Home=()=>{
 
     return(
         <div>
-            Home
+            <Uplodeimages /> 
         </div>
     )
 }
