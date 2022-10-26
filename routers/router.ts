@@ -3,7 +3,7 @@ import express =require('express')
 import middlerware  from '../middleware/middleware'
 import * as UserControll from '../controllers/userController'
 import { Routertypes } from '../types'
-import { userModel } from '../models/userModel'
+
 
 
  const router:Routertypes = express.Router()

@@ -1,8 +1,8 @@
-
+import nodemailer = require('nodemailer')
 import express = require('express')
 import Joi = require('joi')
 import { userModel } from '../models/userModel'
-import { updatedRequest } from '../types'
+import { Mailerprops, updatedRequest } from '../types'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import Jwt from 'jsonwebtoken'
@@ -154,12 +154,9 @@ export const changepassword = (req: updatedRequest, res: express.Response) => {
 
 
                     })
-                    .catch()
+                    .catch(err => { return res.json({ message: 'please check the password' }) })
             })
-            .catch()
-
-
-
+            .catch(err => { return res.json({ message: 'please check the password' }) })
     } else {
         return res.json({ message: 'please check the input values' })
     }
@@ -179,14 +176,17 @@ export const forgetpassword = async (req: updatedRequest, res: express.Response)
             return res.json({ message: 'please enter the valid email id' })
         } else {
             let userToken = await TokenModel.findOne({ email: useremail.email })
-            console.log('running');
+            console.log(`usertoken ${userToken}`);
             if (!userToken) {
                 userToken = await new TokenModel({
                     email: useremail.email,
                     token: crypto.randomBytes(32).toString("hex")
                 }).save()
                 const link = `http://localhost:3000/resetpassword/${userToken.token}`
-                return res.json({ message: 'Reset link sent to you successfully', result: link })
+                Mailer({result:link,email:userToken.email})
+                return res.json({ message: 'Reset link sent to you successfully'  })
+            } else {
+                return res.json({ message: 'please try again later' })
             }
         }
     }
@@ -202,13 +202,17 @@ export const resetpassword = (req: updatedRequest, res: express.Response) => {
     })
 
 
-    const { newpassword, conformpassword } = req.body.body
+    const { newpassword, conformpassword } = req.body.data
+    console.log({ newpassword, conformpassword });
+
     if (newpassword === conformpassword) {
 
-        schema.validateAsync({ newpassword })
+        schema.validateAsync({ newpassword, conformpassword })
             .then(validatepass => {
                 TokenModel.findOne({ token: req.params.token })
                     .then(tokenobject => {
+                        console.log(`gbbg egbr${tokenobject}`);
+
                         if (!tokenobject) {
                             return res.json({ message: 'Invalid entery or token expried' })
                         } else {
@@ -236,9 +240,30 @@ export const resetpassword = (req: updatedRequest, res: express.Response) => {
                 return res.json({ message: err })
             })
     } else {
-        return res.json({message:'please check the password'})
+        return res.json({ message: 'please check the password' })
 
     }
+}
 
+export  const Mailer=({result,email}:Mailerprops)=>{
+
+    const transport=nodemailer.createTransport({
+        host:'smtp-relay.sendinblue.com',
+        port:587,
+        auth:{
+            user:'tsakthibala@gmail.com',
+            pass:'UIyMvDH6zZxjS49G'
+        }
+    })
+
+    transport.sendMail({
+        from:'tsakthibala@gmail.com',
+        to:email,
+        subject:'Reset password',
+        html:`result <a href='${result}'>${result}</a>`,
+        text:'pleace click on the link to reset password'
+
+
+    })
 
 }

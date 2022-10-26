@@ -3,6 +3,7 @@ import express = require ('express')
 import mongoose = require('mongoose')
 import router from './routers/router'
 import Cors from 'cors'
+import multerRouter from './routers/multer'
 let app=express()
 app.use(Cors({
     origin:['http://localhost:3000'],
@@ -11,6 +12,9 @@ app.use(Cors({
 }))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.json())
+console.log('running');
+
+app.use('/multer',multerRouter)
 app.use("/",router)
 mongoose.connect('mongodb://localhost:27017/testnode',(err)=>{
     if(err){

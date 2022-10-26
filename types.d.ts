@@ -12,3 +12,7 @@ export interface updatedRequest extends express.Request{
 export interface Routertypes extends express.IRouter {
     post:(path:string,...middleware:any)=>void
 } 
+export interface Mailerprops {
+    result:string,
+    email:string|any
+}
